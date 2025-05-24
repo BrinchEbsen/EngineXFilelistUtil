@@ -26,7 +26,7 @@
     /// <summary>
     /// Information about a file.
     /// </summary>
-    public record FileInfo
+    public record FileInfoElement
     {
         /// <summary>
         /// File path within the filelist.

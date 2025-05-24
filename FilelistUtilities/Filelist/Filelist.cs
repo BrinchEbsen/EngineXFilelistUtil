@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Reflection.Metadata;
 using System.Text;
 
 namespace FilelistUtilities.Filelist
@@ -122,7 +120,7 @@ namespace FilelistUtilities.Filelist
         /// <summary>
         /// Array of file info elements.
         /// </summary>
-        public FileInfo[] FileInfo { get; set; }
+        public FileInfoElement[] FileInfo { get; set; }
 
         /// <summary>
         /// The root name of the file system detected while parsing.
@@ -144,7 +142,7 @@ namespace FilelistUtilities.Filelist
 
                 int count = 0;
 
-                foreach (FileInfo fi in FileInfo)
+                foreach (FileInfoElement fi in FileInfo)
                     count += (int)fi.NumFileLoc;
 
                 return count;
@@ -232,11 +230,11 @@ namespace FilelistUtilities.Filelist
 
             stream.Seek(fileInfoStartAddress, SeekOrigin.Begin);
 
-            filelist.FileInfo = new FileInfo[filelist.NumFiles];
+            filelist.FileInfo = new FileInfoElement[filelist.NumFiles];
 
             for (int i = 0; i < filelist.NumFiles; i++)
             {
-                var elem = new FileInfo();
+                var elem = new FileInfoElement();
 
                 long addr = stream.Position; //save for later
                 stream.Seek(filelist.FileNameList[i].AbsOffset, SeekOrigin.Begin);
@@ -374,6 +372,9 @@ namespace FilelistUtilities.Filelist
         {
             if (!_haveRead)
                 throw new IOException("Cannot output files without having parsed the filelist.");
+
+            if (BuildType == 0)
+                throw new IOException("Filelist is of build type 0 and thus does not have any packed files to extract.");
 
             if (string.IsNullOrEmpty(filelistBinPath))
             {
@@ -621,13 +622,13 @@ namespace FilelistUtilities.Filelist
                 binWriter.BaseStream.Seek(8, SeekOrigin.Current); //Filesize and NumFiles (calculated later)
                 if (settings.Version > 4)
                 {
-                    binWriter.Write((short)1, bigEndian);
+                    binWriter.Write((short)1, bigEndian); //BuildType always 1 for now
                     binWriter.BaseStream.Seek(2, SeekOrigin.Current); //NumFileLists (calculated later)
                 }
                 binWriter.Seek(4, SeekOrigin.Current); //FileNameListOffset (calculated later)
 
                 //Make new list of file info to write to the .bin later
-                List<FileInfo> fileInfoList = new(inputFiles.Length);
+                List<FileInfoElement> fileInfoList = new(inputFiles.Length);
 
                 //Write files to the archives and build up FileInfo list
                 for (int i = 0; i < inputFiles.Length; i++)
@@ -659,7 +660,7 @@ namespace FilelistUtilities.Filelist
 
                     var archiveWriter = archiveWriters[currentArchive];
 
-                    //Create new archive writer if exceeded limit.
+                    //If we've exceeded the size limit before splitting, we ditch the current archive and start writing a new one.
                     if (settings.Version > 4)
                     {
                         //Check if limit exceeded
@@ -680,6 +681,7 @@ namespace FilelistUtilities.Filelist
                             else
                                 archiveName = settings.FileListName;
 
+                            //.000, .001, .002 etc...
                             archiveName += "." + currentArchive.ToString().PadLeft(3, '0');
 
                             archiveWriters.Add(new BinaryWriter(File.Open(Path.Join(outputPath, archiveName), FileMode.Create)));
@@ -701,7 +703,7 @@ namespace FilelistUtilities.Filelist
 
                     //Now we obtain file info for this file.
 
-                    FileInfo info;
+                    FileInfoElement info;
                     bool initialise; //Whether this is the first time we've encountered this file
 
                     //Check to see if this file already has a FileInfo entry
@@ -709,7 +711,7 @@ namespace FilelistUtilities.Filelist
 
                     if (existingInfo == null)
                     {
-                        info = new FileInfo();
+                        info = new FileInfoElement();
                         initialise = true;
                     } else
                     {
@@ -802,7 +804,7 @@ namespace FilelistUtilities.Filelist
                         }
                     }
 
-                    //Add the file loc
+                    //Add the location to this file (on top of existing locations if they exist)
                     if (settings.Version > 4)
                     {
                         info.NumFileLoc++;
@@ -819,6 +821,8 @@ namespace FilelistUtilities.Filelist
                     if (initialise)
                         fileInfoList.Add(info);
                 }
+
+
 
                 //All the file info has been obtained, write it into the FileInfo array
                 foreach (var file in fileInfoList)
