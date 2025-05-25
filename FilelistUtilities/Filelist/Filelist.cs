@@ -1106,6 +1106,85 @@ namespace FilelistUtilities.Filelist
             return paths.ToArray();
         }
 
+        /// <summary>
+        /// Spread out a file info list such that elements with multiple locations instead have multiple entries with 1 location each.
+        /// Any elements without any locations will be excluded.
+        /// </summary>
+        /// <param name="elems"></param>
+        /// <returns></returns>
+        public static FileInfoElement[] SpreadFileInfo(FileInfoElement[] elems)
+        {
+            List<FileInfoElement> output = [];
+
+            foreach(var el in elems)
+            {
+                if (el.FileLocInfo.Length == 0) continue;
+
+                for (int i = 0; i < el.FileLocInfo.Length; i++)
+                {
+                    output.Add(new FileInfoElement(el)
+                    {
+                        NumFileLoc = 1,
+                        FileLocInfo = [new FileLocInfo
+                        {
+                            FileListNum = el.FileLocInfo[i].FileListNum,
+                            FileLoc = el.FileLocInfo[i].FileLoc
+                        }]
+                    });
+                }
+            }
+
+            output.Sort((e1, e2) =>
+            {
+                if (e1.FileLocInfo[0].FileListNum != e2.FileLocInfo[0].FileListNum)
+                    return e1.FileLocInfo[0].FileListNum.CompareTo(e2.FileLocInfo[0].FileListNum);
+
+                return e1.FileLocInfo[0].FileLoc.CompareTo(e2.FileLocInfo[0].FileLoc);
+            });
+
+            return output.ToArray();
+        }
+
+        public string CreateXUtilTextOutput()
+        {
+            if (!_haveRead) return "Error: Filelist not parsed.";
+
+            FileInfoElement[] elems = SpreadFileInfo(FileInfo);
+
+            var sb = new StringBuilder();
+
+            for (int i = 0; i < elems.Length; i++)
+            {
+                FileInfoElement el = elems[i];
+
+                uint filelistNum;
+                uint filelistLoc;
+
+                if (Version < 5)
+                {
+                    filelistNum = 0;
+                    filelistLoc = el.FileLoc;
+                } else
+                {
+                    filelistNum = el.FileLocInfo[0].FileListNum;
+                    filelistLoc = el.FileLocInfo[0].FileLoc;
+                }
+
+                string line = el.Path.PadRight(72, ' ') + " : Len ";
+                line += el.Length.ToString().PadLeft(10, ' ') + " : Ver ";
+                line += el.Version.ToString().PadLeft(4, ' ') + " : Hash 0x";
+                line += el.HashCode.ToString("X").PadLeft(8, '0') + " : Ts 0x";
+                line += el.Flags.ToString("X").PadLeft(8, '0') + " :  Loc ";
+                line += filelistLoc.ToString("X").PadLeft(11, ' ');
+                if (Version >= 5)
+                    line += ":" + filelistNum.ToString().PadLeft(3, '0');
+
+                sb.AppendLine(line);
+            }
+
+            return sb.ToString();
+        }
+
         //https://stackoverflow.com/questions/13021866/any-way-to-use-stream-copyto-to-copy-only-certain-number-of-bytes
         private static void CopyStream(Stream input, Stream output, int bytes)
         {

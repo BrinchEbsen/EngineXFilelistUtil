@@ -21,6 +21,14 @@
         /// The index will be the extension of the binary file, so .000, .001, .002 etc...
         /// </summary>
         public uint FileListNum { get; set; }
+
+        public FileLocInfo() { }
+
+        public FileLocInfo(FileLocInfo o)
+        {
+            this.FileLoc = o.FileLoc;
+            this.FileListNum = o.FileListNum;
+        }
     }
 
     /// <summary>
@@ -63,5 +71,22 @@
         /// A file can be located in multiple places for disk seeking reasons.
         /// </summary>
         public FileLocInfo[] FileLocInfo { get; set; } = [];
+
+        public FileInfoElement() { }
+
+        public FileInfoElement(FileInfoElement o)
+        {
+            this.Path = o.Path;
+            this.FileLoc = o.FileLoc;
+            this.Length = o.Length;
+            this.HashCode = o.HashCode;
+            this.Version = o.Version;
+            this.Flags = o.Flags;
+            this.NumFileLoc = o.NumFileLoc;
+            
+            this.FileLocInfo = new FileLocInfo[o.FileLocInfo.Length];
+            for(int i = 0; i < o.FileLocInfo.Length; i++)
+                this.FileLocInfo[i] = new FileLocInfo(o.FileLocInfo[i]);
+        }
     }
 }
