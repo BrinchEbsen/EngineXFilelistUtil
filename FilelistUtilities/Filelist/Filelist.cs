@@ -557,7 +557,7 @@ namespace FilelistUtilities.Filelist
             ThrowIfUnsupported(settings.Version);
 
             if (settings.FileSizeSplit is >= 0 and < FILE_SIZE_SPLIT_MINIMUM)
-                throw new ArgumentException($"File size split limit is below the minimum amount ({FILE_SIZE_SPLIT_MINIMUM:X}).");
+                throw new ArgumentException($"File size split limit is below the minimum amount ({FILE_SIZE_SPLIT_MINIMUM}).");
 
             if (Path.GetInvalidFileNameChars().Contains(settings.RootName))
                 throw new ArgumentException($"Root directory name {settings.RootName} is invalid.");
@@ -648,12 +648,12 @@ namespace FilelistUtilities.Filelist
 
                     //Not sure how this could ever happen but oh well
                     if (fileReader.BaseStream.Length > int.MaxValue)
-                        throw new IOException($"File {file} is {fileReader.BaseStream.Length:X} bytes long, which exceeds the 32 bit filesize limit.");
+                        throw new IOException($"File {file} is {fileReader.BaseStream.Length} bytes long, which exceeds the 32 bit filesize limit.");
 
                     //If the file length exceeds the archive split size, something's terribly wrong
                     //and we could enter an infinite loop of creating new archive files
                     if ((settings.FileSizeSplit > 0) && (fileReader.BaseStream.Length > settings.FileSizeSplit))
-                        throw new IOException($"File {file} is {fileReader.BaseStream.Length:X} bytes long, " +
+                        throw new IOException($"File {file} is {fileReader.BaseStream.Length} bytes long, " +
                                               $"which is larger than the max size of the filelist archive before it splits.");
 
                     uint fileSize = (uint)fileReader.BaseStream.Length;
