@@ -239,13 +239,8 @@ internal class Program
     }
 
     private static void CreateFilelist(
-        DirectoryInfo inputDir,
-        FileInfo outputFile,
-        string rootName,
-        uint version,
-        string platformStr,
-        long? splitSize,
-        FileInfo? scrFile)
+        DirectoryInfo inputDir, FileInfo outputFile, string rootName, uint version,
+        string platformStr, long? splitSize, FileInfo? scrFile)
     {
         try
         {

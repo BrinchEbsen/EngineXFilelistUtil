@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilelistUtilities.Sandbox",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilelistUtilCLI", "FilelistUtilCLI\FilelistUtilCLI.csproj", "{B9D4B9A1-2E5E-4419-A949-F900453C3E00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilelistUtilGUI", "FilelistUtilGUI\FilelistUtilGUI.csproj", "{409C7650-5156-4B99-A7F2-502BAE7C8148}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B9D4B9A1-2E5E-4419-A949-F900453C3E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9D4B9A1-2E5E-4419-A949-F900453C3E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9D4B9A1-2E5E-4419-A949-F900453C3E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{409C7650-5156-4B99-A7F2-502BAE7C8148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{409C7650-5156-4B99-A7F2-502BAE7C8148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{409C7650-5156-4B99-A7F2-502BAE7C8148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{409C7650-5156-4B99-A7F2-502BAE7C8148}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
