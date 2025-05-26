@@ -59,7 +59,7 @@ namespace FilelistUtilities.Filelist
     /// The FileList is a virtual file system used in EngineX games.
     /// This class contains methods for parsing, storing and handling filelist files.
     /// </summary>
-    public class Filelist
+    public partial class Filelist
     {
         /// <summary>
         /// Some arbitrary minimum for the file size split, just so we don't end up writing a million filelists.
@@ -427,6 +427,8 @@ namespace FilelistUtilities.Filelist
                     filelistReaders[i] = new BinaryReader(File.OpenRead(binPath));
                 }
 
+                _progress = 0d;
+
                 //Write files
                 foreach (var info in FileInfo)
                 {
@@ -440,7 +442,7 @@ namespace FilelistUtilities.Filelist
                     {
                         if (info.FileLocInfo.Length == 0)
                         {
-                            Console.WriteLine($"Skipping file {path}, as it does not have a defined location in an archive.");
+                            LogInfo($"Skipping file {path}, as it does not have a defined location in an archive.");
                             continue;
                         }
 
@@ -456,7 +458,7 @@ namespace FilelistUtilities.Filelist
 
                     if (filelistNum > filelistReaders.Length-1)
                     {
-                        Console.WriteLine($"Skipping file {path}, as it targets filelist {filelistNum}, which doesn't exist.");
+                        LogInfo($"Skipping file {path}, as it targets filelist {filelistNum}, which doesn't exist.");
                         continue;
                     }
 
@@ -508,11 +510,13 @@ namespace FilelistUtilities.Filelist
 
                     reader.BaseStream.Seek(filelistOffset, SeekOrigin.Begin);
 
-                    Console.WriteLine($"Writing file {path}...");
+                    LogInfo($"Writing file {path}...");
 
                     //Set up writing stream and copy the data
                     using BinaryWriter writer = new(File.Open(fullFilePath, FileMode.Create));
                     CopyStream(reader.BaseStream, writer.BaseStream, len);
+
+                    _progress += 1d / FileInfo.Length;
                 }
             } catch (Exception)
             {
@@ -630,6 +634,10 @@ namespace FilelistUtilities.Filelist
                 //Make new list of file info to write to the .bin later
                 List<FileInfoElement> fileInfoList = new(inputFiles.Length);
 
+                LogInfo($"Writing to archive...");
+
+                _progress = 0d;
+
                 //Write files to the archives and build up FileInfo list
                 for (int i = 0; i < inputFiles.Length; i++)
                 {
@@ -694,7 +702,7 @@ namespace FilelistUtilities.Filelist
                     //Get the position of the file we're about to write
                     uint pos = (uint)archiveWriter.BaseStream.Position;
 
-                    Console.WriteLine($"Writing to filelist: {virtualFileName}...");
+                    LogInfo($"Writing: {virtualFileName}...");
 
                     //Write the file to the archive
                     CopyStream(fileReader.BaseStream, archiveWriter.BaseStream, (int)fileSize);
@@ -820,9 +828,15 @@ namespace FilelistUtilities.Filelist
 
                     if (initialise)
                         fileInfoList.Add(info);
+
+                    _progress = i / (double)inputFiles.Length;
                 }
 
 
+
+                LogInfo("Writing .bin file info...");
+
+                _progress = 0d;
 
                 //All the file info has been obtained, write it into the FileInfo array
                 foreach (var file in fileInfoList)
@@ -844,11 +858,15 @@ namespace FilelistUtilities.Filelist
                             binWriter.Write(loc.FileListNum, bigEndian);
                         }
                     }
+
+                    _progress += 1d / fileInfoList.Count;
                 }
 
 
-                
-                Console.WriteLine("Writing file names...");
+
+                LogInfo("Writing .bin file names...");
+
+                _progress = 0d;
 
                 //Save start of filename offset table for later reference
                 uint fileNameTableAddress = (uint)binWriter.BaseStream.Position;
@@ -877,6 +895,8 @@ namespace FilelistUtilities.Filelist
 
                     //Advance current position to start of next string
                     currStringPosition = (uint)binWriter.BaseStream.Position;
+
+                    _progress = i / (double)fileInfoList.Count;
                 }
 
                 //Make .bin file align to 32-byte boundary.
@@ -911,7 +931,7 @@ namespace FilelistUtilities.Filelist
                     writer?.Dispose();
             }
 
-            Console.WriteLine("Done.");
+            LogInfo("Done.");
         }
 
         /// <summary>
@@ -1099,7 +1119,7 @@ namespace FilelistUtilities.Filelist
                     if (File.Exists(abs))
                         paths.Add(abs);
                     else
-                        Console.WriteLine($"File {abs} from filelist descriptor does not exist!");
+                        LogInfo($"File {abs} from filelist descriptor does not exist!");
                 }
             }
 
