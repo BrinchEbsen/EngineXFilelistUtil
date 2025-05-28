@@ -7,6 +7,7 @@ namespace FilelistUtilGUI
     {
         private string? _selectedBinFile = null;
         private Filelist? _currentFileListBin = null;
+        private string? _outputScrFile = null;
 
         public MainWnd()
         {
@@ -42,7 +43,8 @@ namespace FilelistUtilGUI
                 _currentFileListBin = filelist;
 
                 PopulateBinFileInfo();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Failed to open .bin file.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -85,7 +87,7 @@ namespace FilelistUtilGUI
                     else
                     {
                         bool first = true;
-                        foreach(var loc in info.FileLocInfo)
+                        foreach (var loc in info.FileLocInfo)
                         {
                             if (!first)
                                 filelocStr += ", ";
@@ -115,7 +117,7 @@ namespace FilelistUtilGUI
             Lbl_BinSize.Text = _currentFileListBin.FileSize.ToString();
             Lbl_NumberOfFiles.Text = _currentFileListBin.NumFiles.ToString();
             Lbl_BuildType.Text = _currentFileListBin.Version < 5 ? "N/A" : _currentFileListBin.BuildType.ToString();
-            Lbl_NumberOfArchives.Text = _currentFileListBin.Version < 5 ? "1" : (_currentFileListBin.NumFileLists+1).ToString();
+            Lbl_NumberOfArchives.Text = _currentFileListBin.Version < 5 ? "1" : (_currentFileListBin.NumFileLists + 1).ToString();
 
             //Populate the "Archives" panel
 
@@ -126,7 +128,7 @@ namespace FilelistUtilGUI
 
             string[] arvhicePaths = FindBinAssociatedArchives();
 
-            foreach(string path in arvhicePaths)
+            foreach (string path in arvhicePaths)
             {
                 FlowPanel_Archives.Controls.Add(new Label
                 {
@@ -134,7 +136,10 @@ namespace FilelistUtilGUI
                 });
             }
 
+            //Finally make stats panel visible to the user.
+
             GroupBox_FilelistStats.Visible = true;
+            GroupBox_ExtractFiles.Visible = true;
         }
 
         private string[] FindBinAssociatedArchives()
@@ -160,7 +165,8 @@ namespace FilelistUtilGUI
                         return [];
                     }
                     return [datPath];
-                } else
+                }
+                else
                 //Version 5+ use archives with incrementing extensions (.000, .001, .002 etc.)
                 {
                     List<string> paths = new(_currentFileListBin.NumFileLists + 1);
@@ -182,7 +188,8 @@ namespace FilelistUtilGUI
 
                     return paths.ToArray();
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(
                             ex.Message,
@@ -190,6 +197,88 @@ namespace FilelistUtilGUI
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
                 return [];
+            }
+        }
+
+        private void Btn_ExtractFiles_Click(object sender, EventArgs e)
+        {
+            var res = ExtractFilesDirectoryDialog.ShowDialog(this);
+
+            if (res == DialogResult.OK)
+            {
+                string path = ExtractFilesDirectoryDialog.SelectedPath;
+                if (Directory.Exists(path))
+                {
+                    ExtractFiles(path);
+                }
+            }
+        }
+
+        private void Btn_BrowseOutputScr_Click(object sender, EventArgs e)
+        {
+            var res = OutputScrFileDialog.ShowDialog(this);
+
+            if (res == DialogResult.OK)
+            {
+                if (OutputScrFileDialog.FileName != string.Empty)
+                {
+                    _outputScrFile = OutputScrFileDialog.FileName;
+                    Lbl_ExportScrFilePath.Text = _outputScrFile;
+                }
+            }
+        }
+
+        private void Check_OutputScr_CheckedChanged(object sender, EventArgs e)
+        {
+            Btn_BrowseOutputScr.Enabled = Check_OutputScr.Checked;
+            Lbl_ExportScrFilePath.Enabled = Check_OutputScr.Checked;
+        }
+
+        private void ExtractFiles(string path)
+        {
+            if (_currentFileListBin is null) return;
+
+            if (Check_OutputScr.Checked)
+            {
+                if (_outputScrFile is null)
+                {
+                    MessageBox.Show(
+                        "No output .scr file was specified.",
+                        "Cannot extract files.",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
+                    return;
+                }
+
+                try
+                {
+                    _currentFileListBin.ExportDescriptor(_outputScrFile);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        ex.Message,
+                        "Error outputting .scr file.",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
+                    return;
+                }
+            }
+
+            try
+            {
+                //TODO Add a process form
+                _currentFileListBin.ExportFiles(path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                        ex.Message,
+                        "Error extracting files.",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
             }
         }
     }

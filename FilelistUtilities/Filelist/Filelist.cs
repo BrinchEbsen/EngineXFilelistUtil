@@ -970,6 +970,11 @@ namespace FilelistUtilities.Filelist
             return settings;
         }
 
+        public void ExportDescriptor(string filePath)
+            => ExportDescriptor(
+                Path.GetDirectoryName(filePath),
+                Path.GetFileName(filePath));
+
         /// <summary>
         /// Export a descriptor text file for this filelist, listing all the files inside.
         /// </summary>

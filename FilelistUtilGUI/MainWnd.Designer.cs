@@ -31,6 +31,11 @@ namespace FilelistUtilGUI
         {
             tabControl1 = new TabControl();
             TabPage_Extract = new TabPage();
+            GroupBox_ExtractFiles = new GroupBox();
+            Btn_ExtractFiles = new Button();
+            Btn_BrowseOutputScr = new Button();
+            Lbl_ExportScrFilePath = new Label();
+            Check_OutputScr = new CheckBox();
             ListView_FilelistBinList = new ListView();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
@@ -58,8 +63,11 @@ namespace FilelistUtilGUI
             label1 = new Label();
             TabPage_Create = new TabPage();
             OpenReadBinDialogue = new OpenFileDialog();
+            OutputScrFileDialog = new SaveFileDialog();
+            ExtractFilesDirectoryDialog = new FolderBrowserDialog();
             tabControl1.SuspendLayout();
             TabPage_Extract.SuspendLayout();
+            GroupBox_ExtractFiles.SuspendLayout();
             GroupBox_FilelistStats.SuspendLayout();
             SuspendLayout();
             // 
@@ -71,11 +79,12 @@ namespace FilelistUtilGUI
             tabControl1.Location = new Point(12, 12);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(887, 769);
+            tabControl1.Size = new Size(887, 838);
             tabControl1.TabIndex = 0;
             // 
             // TabPage_Extract
             // 
+            TabPage_Extract.Controls.Add(GroupBox_ExtractFiles);
             TabPage_Extract.Controls.Add(ListView_FilelistBinList);
             TabPage_Extract.Controls.Add(GroupBox_FilelistStats);
             TabPage_Extract.Controls.Add(Lbl_OpenedBinFile);
@@ -84,10 +93,67 @@ namespace FilelistUtilGUI
             TabPage_Extract.Location = new Point(4, 24);
             TabPage_Extract.Name = "TabPage_Extract";
             TabPage_Extract.Padding = new Padding(3);
-            TabPage_Extract.Size = new Size(879, 741);
+            TabPage_Extract.Size = new Size(879, 810);
             TabPage_Extract.TabIndex = 0;
             TabPage_Extract.Text = "Read/Extract";
             TabPage_Extract.UseVisualStyleBackColor = true;
+            // 
+            // GroupBox_ExtractFiles
+            // 
+            GroupBox_ExtractFiles.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GroupBox_ExtractFiles.Controls.Add(Btn_ExtractFiles);
+            GroupBox_ExtractFiles.Controls.Add(Btn_BrowseOutputScr);
+            GroupBox_ExtractFiles.Controls.Add(Lbl_ExportScrFilePath);
+            GroupBox_ExtractFiles.Controls.Add(Check_OutputScr);
+            GroupBox_ExtractFiles.Location = new Point(6, 696);
+            GroupBox_ExtractFiles.Name = "GroupBox_ExtractFiles";
+            GroupBox_ExtractFiles.Size = new Size(867, 108);
+            GroupBox_ExtractFiles.TabIndex = 11;
+            GroupBox_ExtractFiles.TabStop = false;
+            GroupBox_ExtractFiles.Text = "Extract";
+            GroupBox_ExtractFiles.Visible = false;
+            // 
+            // Btn_ExtractFiles
+            // 
+            Btn_ExtractFiles.Location = new Point(6, 22);
+            Btn_ExtractFiles.Name = "Btn_ExtractFiles";
+            Btn_ExtractFiles.Size = new Size(120, 23);
+            Btn_ExtractFiles.TabIndex = 7;
+            Btn_ExtractFiles.Text = "Extract Files...";
+            Btn_ExtractFiles.UseVisualStyleBackColor = true;
+            Btn_ExtractFiles.Click += Btn_ExtractFiles_Click;
+            // 
+            // Btn_BrowseOutputScr
+            // 
+            Btn_BrowseOutputScr.Enabled = false;
+            Btn_BrowseOutputScr.Location = new Point(6, 76);
+            Btn_BrowseOutputScr.Name = "Btn_BrowseOutputScr";
+            Btn_BrowseOutputScr.Size = new Size(75, 23);
+            Btn_BrowseOutputScr.TabIndex = 10;
+            Btn_BrowseOutputScr.Text = "Browse";
+            Btn_BrowseOutputScr.UseVisualStyleBackColor = true;
+            Btn_BrowseOutputScr.Click += Btn_BrowseOutputScr_Click;
+            // 
+            // Lbl_ExportScrFilePath
+            // 
+            Lbl_ExportScrFilePath.AutoSize = true;
+            Lbl_ExportScrFilePath.Enabled = false;
+            Lbl_ExportScrFilePath.Location = new Point(87, 80);
+            Lbl_ExportScrFilePath.Name = "Lbl_ExportScrFilePath";
+            Lbl_ExportScrFilePath.Size = new Size(155, 15);
+            Lbl_ExportScrFilePath.TabIndex = 9;
+            Lbl_ExportScrFilePath.Text = "No .scr destination selected.";
+            // 
+            // Check_OutputScr
+            // 
+            Check_OutputScr.AutoSize = true;
+            Check_OutputScr.Location = new Point(6, 51);
+            Check_OutputScr.Name = "Check_OutputScr";
+            Check_OutputScr.Size = new Size(104, 19);
+            Check_OutputScr.TabIndex = 8;
+            Check_OutputScr.Text = "Output .scr file";
+            Check_OutputScr.UseVisualStyleBackColor = true;
+            Check_OutputScr.CheckedChanged += Check_OutputScr_CheckedChanged;
             // 
             // ListView_FilelistBinList
             // 
@@ -96,7 +162,7 @@ namespace FilelistUtilGUI
             ListView_FilelistBinList.Location = new Point(6, 50);
             ListView_FilelistBinList.MultiSelect = false;
             ListView_FilelistBinList.Name = "ListView_FilelistBinList";
-            ListView_FilelistBinList.Size = new Size(867, 467);
+            ListView_FilelistBinList.Size = new Size(867, 532);
             ListView_FilelistBinList.TabIndex = 6;
             ListView_FilelistBinList.UseCompatibleStateImageBehavior = false;
             ListView_FilelistBinList.View = View.Details;
@@ -154,7 +220,7 @@ namespace FilelistUtilGUI
             GroupBox_FilelistStats.Controls.Add(label4);
             GroupBox_FilelistStats.Controls.Add(label3);
             GroupBox_FilelistStats.Controls.Add(label2);
-            GroupBox_FilelistStats.Location = new Point(6, 523);
+            GroupBox_FilelistStats.Location = new Point(6, 588);
             GroupBox_FilelistStats.Name = "GroupBox_FilelistStats";
             GroupBox_FilelistStats.Size = new Size(867, 102);
             GroupBox_FilelistStats.TabIndex = 5;
@@ -304,7 +370,7 @@ namespace FilelistUtilGUI
             TabPage_Create.Location = new Point(4, 24);
             TabPage_Create.Name = "TabPage_Create";
             TabPage_Create.Padding = new Padding(3);
-            TabPage_Create.Size = new Size(879, 741);
+            TabPage_Create.Size = new Size(879, 810);
             TabPage_Create.TabIndex = 1;
             TabPage_Create.Text = "Create";
             TabPage_Create.UseVisualStyleBackColor = true;
@@ -313,11 +379,18 @@ namespace FilelistUtilGUI
             // 
             OpenReadBinDialogue.Title = "Open .bin filelist file";
             // 
+            // OutputScrFileDialog
+            // 
+            OutputScrFileDialog.DefaultExt = "scr";
+            OutputScrFileDialog.FileName = "Filelist";
+            OutputScrFileDialog.Filter = "Descriptor files|*.scr";
+            OutputScrFileDialog.Title = "Save output .scr file";
+            // 
             // MainWnd
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(911, 793);
+            ClientSize = new Size(911, 862);
             Controls.Add(tabControl1);
             Name = "MainWnd";
             ShowIcon = false;
@@ -326,6 +399,8 @@ namespace FilelistUtilGUI
             tabControl1.ResumeLayout(false);
             TabPage_Extract.ResumeLayout(false);
             TabPage_Extract.PerformLayout();
+            GroupBox_ExtractFiles.ResumeLayout(false);
+            GroupBox_ExtractFiles.PerformLayout();
             GroupBox_FilelistStats.ResumeLayout(false);
             GroupBox_FilelistStats.PerformLayout();
             ResumeLayout(false);
@@ -362,5 +437,12 @@ namespace FilelistUtilGUI
         private ColumnHeader columnHeader6;
         private ColumnHeader columnHeader7;
         private ColumnHeader columnHeader8;
+        private Button Btn_ExtractFiles;
+        private CheckBox Check_OutputScr;
+        private Button Btn_BrowseOutputScr;
+        private Label Lbl_ExportScrFilePath;
+        private SaveFileDialog OutputScrFileDialog;
+        private GroupBox GroupBox_ExtractFiles;
+        private FolderBrowserDialog ExtractFilesDirectoryDialog;
     }
 }
