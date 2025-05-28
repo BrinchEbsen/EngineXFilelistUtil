@@ -29,6 +29,11 @@
             this.FileLoc = o.FileLoc;
             this.FileListNum = o.FileListNum;
         }
+
+        public override string ToString()
+        {
+            return FileLoc.ToString("X") + ":" + FileListNum.ToString().PadLeft(3, '0');
+        }
     }
 
     /// <summary>
