@@ -1,6 +1,5 @@
 ﻿using FilelistUtilities.Common;
 using FilelistUtilities.Filelist;
-using System.Runtime.Versioning;
 
 namespace FilelistUtilGUI
 {

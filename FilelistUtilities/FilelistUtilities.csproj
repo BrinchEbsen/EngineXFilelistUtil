@@ -3,5 +3,6 @@
     <TargetFramework>net9.0</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyName>flutil_lib</AssemblyName>
   </PropertyGroup>
 </Project>
