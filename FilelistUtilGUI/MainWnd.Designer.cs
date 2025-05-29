@@ -62,13 +62,39 @@ namespace FilelistUtilGUI
             Btn_BrowseReadBinFile = new Button();
             label1 = new Label();
             TabPage_Create = new TabPage();
+            Btn_CreateFileList = new Button();
+            Lbl_CreateFilelistInputDir = new Label();
+            Btn_BrowseInputDirectory = new Button();
+            label14 = new Label();
+            label13 = new Label();
+            label12 = new Label();
+            label11 = new Label();
+            label10 = new Label();
+            label9 = new Label();
+            Btn_BrowseInputScr = new Button();
+            Lbl_InputScrFilePath = new Label();
+            Check_UseScrFile = new CheckBox();
+            NumUpDown_SplitSize = new NumericUpDown();
+            Check_UseXboxDefaultSplitSize = new CheckBox();
+            TextBox_DriveLetter = new TextBox();
+            TextBox_FilelistName = new TextBox();
+            NumUpDown_Version = new NumericUpDown();
+            label8 = new Label();
+            ComboBox_Platform = new ComboBox();
+            Check_UseSplitSize = new CheckBox();
             OpenReadBinDialogue = new OpenFileDialog();
             OutputScrFileDialog = new SaveFileDialog();
             ExtractFilesDirectoryDialog = new FolderBrowserDialog();
+            InputScrFileDialog = new OpenFileDialog();
+            CreateFilelistInputDirDialog = new FolderBrowserDialog();
+            CreateFilelistOutputDirDialog = new FolderBrowserDialog();
             tabControl1.SuspendLayout();
             TabPage_Extract.SuspendLayout();
             GroupBox_ExtractFiles.SuspendLayout();
             GroupBox_FilelistStats.SuspendLayout();
+            TabPage_Create.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NumUpDown_SplitSize).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)NumUpDown_Version).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -367,6 +393,26 @@ namespace FilelistUtilGUI
             // 
             // TabPage_Create
             // 
+            TabPage_Create.Controls.Add(Btn_CreateFileList);
+            TabPage_Create.Controls.Add(Lbl_CreateFilelistInputDir);
+            TabPage_Create.Controls.Add(Btn_BrowseInputDirectory);
+            TabPage_Create.Controls.Add(label14);
+            TabPage_Create.Controls.Add(label13);
+            TabPage_Create.Controls.Add(label12);
+            TabPage_Create.Controls.Add(label11);
+            TabPage_Create.Controls.Add(label10);
+            TabPage_Create.Controls.Add(label9);
+            TabPage_Create.Controls.Add(Btn_BrowseInputScr);
+            TabPage_Create.Controls.Add(Lbl_InputScrFilePath);
+            TabPage_Create.Controls.Add(Check_UseScrFile);
+            TabPage_Create.Controls.Add(NumUpDown_SplitSize);
+            TabPage_Create.Controls.Add(Check_UseXboxDefaultSplitSize);
+            TabPage_Create.Controls.Add(TextBox_DriveLetter);
+            TabPage_Create.Controls.Add(TextBox_FilelistName);
+            TabPage_Create.Controls.Add(NumUpDown_Version);
+            TabPage_Create.Controls.Add(label8);
+            TabPage_Create.Controls.Add(ComboBox_Platform);
+            TabPage_Create.Controls.Add(Check_UseSplitSize);
             TabPage_Create.Location = new Point(4, 24);
             TabPage_Create.Name = "TabPage_Create";
             TabPage_Create.Padding = new Padding(3);
@@ -374,6 +420,195 @@ namespace FilelistUtilGUI
             TabPage_Create.TabIndex = 1;
             TabPage_Create.Text = "Create";
             TabPage_Create.UseVisualStyleBackColor = true;
+            // 
+            // Btn_CreateFileList
+            // 
+            Btn_CreateFileList.Location = new Point(47, 309);
+            Btn_CreateFileList.Name = "Btn_CreateFileList";
+            Btn_CreateFileList.Size = new Size(107, 34);
+            Btn_CreateFileList.TabIndex = 22;
+            Btn_CreateFileList.Text = "Create Filelist...";
+            Btn_CreateFileList.UseVisualStyleBackColor = true;
+            Btn_CreateFileList.Click += Btn_CreateFileList_Click;
+            // 
+            // Lbl_CreateFilelistInputDir
+            // 
+            Lbl_CreateFilelistInputDir.AutoSize = true;
+            Lbl_CreateFilelistInputDir.Location = new Point(179, 270);
+            Lbl_CreateFilelistInputDir.Name = "Lbl_CreateFilelistInputDir";
+            Lbl_CreateFilelistInputDir.Size = new Size(122, 15);
+            Lbl_CreateFilelistInputDir.TabIndex = 21;
+            Lbl_CreateFilelistInputDir.Text = "No directory selected.";
+            // 
+            // Btn_BrowseInputDirectory
+            // 
+            Btn_BrowseInputDirectory.Location = new Point(98, 266);
+            Btn_BrowseInputDirectory.Name = "Btn_BrowseInputDirectory";
+            Btn_BrowseInputDirectory.Size = new Size(75, 23);
+            Btn_BrowseInputDirectory.TabIndex = 20;
+            Btn_BrowseInputDirectory.Text = "Browse";
+            Btn_BrowseInputDirectory.UseVisualStyleBackColor = true;
+            Btn_BrowseInputDirectory.Click += Btn_BrowseInputDirectory_Click;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(6, 270);
+            label14.Name = "label14";
+            label14.Size = new Size(88, 15);
+            label14.TabIndex = 19;
+            label14.Text = "Input directory:";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(6, 216);
+            label13.Name = "label13";
+            label13.Size = new Size(47, 15);
+            label13.TabIndex = 18;
+            label13.Text = ".scr file:";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(6, 134);
+            label12.Name = "label12";
+            label12.Size = new Size(74, 15);
+            label12.TabIndex = 17;
+            label12.Text = "Split file size:";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(6, 107);
+            label11.Name = "label11";
+            label11.Size = new Size(67, 15);
+            label11.TabIndex = 16;
+            label11.Text = "Drive letter:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(6, 78);
+            label10.Name = "label10";
+            label10.Size = new Size(76, 15);
+            label10.TabIndex = 15;
+            label10.Text = "Filelist name:";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(6, 48);
+            label9.Name = "label9";
+            label9.Size = new Size(48, 15);
+            label9.TabIndex = 14;
+            label9.Text = "Version:";
+            // 
+            // Btn_BrowseInputScr
+            // 
+            Btn_BrowseInputScr.Enabled = false;
+            Btn_BrowseInputScr.Location = new Point(119, 237);
+            Btn_BrowseInputScr.Name = "Btn_BrowseInputScr";
+            Btn_BrowseInputScr.Size = new Size(75, 23);
+            Btn_BrowseInputScr.TabIndex = 13;
+            Btn_BrowseInputScr.Text = "Browse";
+            Btn_BrowseInputScr.UseVisualStyleBackColor = true;
+            Btn_BrowseInputScr.Click += Btn_BrowseInputScr_Click;
+            // 
+            // Lbl_InputScrFilePath
+            // 
+            Lbl_InputScrFilePath.AutoSize = true;
+            Lbl_InputScrFilePath.Enabled = false;
+            Lbl_InputScrFilePath.Location = new Point(200, 241);
+            Lbl_InputScrFilePath.Name = "Lbl_InputScrFilePath";
+            Lbl_InputScrFilePath.Size = new Size(112, 15);
+            Lbl_InputScrFilePath.TabIndex = 12;
+            Lbl_InputScrFilePath.Text = "No .scr file selected.";
+            // 
+            // Check_UseScrFile
+            // 
+            Check_UseScrFile.AutoSize = true;
+            Check_UseScrFile.Location = new Point(98, 212);
+            Check_UseScrFile.Name = "Check_UseScrFile";
+            Check_UseScrFile.Size = new Size(85, 19);
+            Check_UseScrFile.TabIndex = 11;
+            Check_UseScrFile.Text = "Use .scr file";
+            Check_UseScrFile.UseVisualStyleBackColor = true;
+            Check_UseScrFile.CheckedChanged += Check_UseScrFile_CheckedChanged;
+            // 
+            // NumUpDown_SplitSize
+            // 
+            NumUpDown_SplitSize.Enabled = false;
+            NumUpDown_SplitSize.Location = new Point(119, 183);
+            NumUpDown_SplitSize.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
+            NumUpDown_SplitSize.Name = "NumUpDown_SplitSize";
+            NumUpDown_SplitSize.Size = new Size(120, 23);
+            NumUpDown_SplitSize.TabIndex = 7;
+            // 
+            // Check_UseXboxDefaultSplitSize
+            // 
+            Check_UseXboxDefaultSplitSize.AutoSize = true;
+            Check_UseXboxDefaultSplitSize.Enabled = false;
+            Check_UseXboxDefaultSplitSize.Location = new Point(119, 158);
+            Check_UseXboxDefaultSplitSize.Name = "Check_UseXboxDefaultSplitSize";
+            Check_UseXboxDefaultSplitSize.Size = new Size(115, 19);
+            Check_UseXboxDefaultSplitSize.TabIndex = 6;
+            Check_UseXboxDefaultSplitSize.Text = "Use Xbox Default";
+            Check_UseXboxDefaultSplitSize.UseVisualStyleBackColor = true;
+            Check_UseXboxDefaultSplitSize.CheckedChanged += Check_UseSplitSize_CheckedChanged;
+            // 
+            // TextBox_DriveLetter
+            // 
+            TextBox_DriveLetter.Location = new Point(98, 104);
+            TextBox_DriveLetter.MaxLength = 1;
+            TextBox_DriveLetter.Name = "TextBox_DriveLetter";
+            TextBox_DriveLetter.Size = new Size(120, 23);
+            TextBox_DriveLetter.TabIndex = 5;
+            TextBox_DriveLetter.Text = "x";
+            // 
+            // TextBox_FilelistName
+            // 
+            TextBox_FilelistName.Location = new Point(98, 75);
+            TextBox_FilelistName.Name = "TextBox_FilelistName";
+            TextBox_FilelistName.Size = new Size(120, 23);
+            TextBox_FilelistName.TabIndex = 3;
+            TextBox_FilelistName.Text = "Filelist";
+            // 
+            // NumUpDown_Version
+            // 
+            NumUpDown_Version.Location = new Point(98, 46);
+            NumUpDown_Version.Name = "NumUpDown_Version";
+            NumUpDown_Version.Size = new Size(120, 23);
+            NumUpDown_Version.TabIndex = 2;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(6, 20);
+            label8.Name = "label8";
+            label8.Size = new Size(56, 15);
+            label8.TabIndex = 1;
+            label8.Text = "Platform:";
+            // 
+            // ComboBox_Platform
+            // 
+            ComboBox_Platform.DropDownStyle = ComboBoxStyle.DropDownList;
+            ComboBox_Platform.FormattingEnabled = true;
+            ComboBox_Platform.Location = new Point(98, 17);
+            ComboBox_Platform.Name = "ComboBox_Platform";
+            ComboBox_Platform.Size = new Size(121, 23);
+            ComboBox_Platform.TabIndex = 0;
+            // 
+            // Check_UseSplitSize
+            // 
+            Check_UseSplitSize.AutoSize = true;
+            Check_UseSplitSize.Location = new Point(98, 133);
+            Check_UseSplitSize.Name = "Check_UseSplitSize";
+            Check_UseSplitSize.Size = new Size(124, 19);
+            Check_UseSplitSize.TabIndex = 4;
+            Check_UseSplitSize.Text = "Use Split Size Limit";
+            Check_UseSplitSize.UseVisualStyleBackColor = true;
+            Check_UseSplitSize.CheckedChanged += Check_UseSplitSize_CheckedChanged;
             // 
             // OpenReadBinDialogue
             // 
@@ -385,6 +620,10 @@ namespace FilelistUtilGUI
             OutputScrFileDialog.FileName = "Filelist";
             OutputScrFileDialog.Filter = "Descriptor files|*.scr";
             OutputScrFileDialog.Title = "Save output .scr file";
+            // 
+            // InputScrFileDialog
+            // 
+            InputScrFileDialog.Filter = "Descriptor files|*.scr";
             // 
             // MainWnd
             // 
@@ -403,6 +642,10 @@ namespace FilelistUtilGUI
             GroupBox_ExtractFiles.PerformLayout();
             GroupBox_FilelistStats.ResumeLayout(false);
             GroupBox_FilelistStats.PerformLayout();
+            TabPage_Create.ResumeLayout(false);
+            TabPage_Create.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NumUpDown_SplitSize).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NumUpDown_Version).EndInit();
             ResumeLayout(false);
         }
 
@@ -444,5 +687,28 @@ namespace FilelistUtilGUI
         private SaveFileDialog OutputScrFileDialog;
         private GroupBox GroupBox_ExtractFiles;
         private FolderBrowserDialog ExtractFilesDirectoryDialog;
+        private Label label8;
+        private ComboBox ComboBox_Platform;
+        private NumericUpDown NumUpDown_Version;
+        private TextBox TextBox_FilelistName;
+        private CheckBox Check_UseSplitSize;
+        private TextBox TextBox_DriveLetter;
+        private CheckBox Check_UseXboxDefaultSplitSize;
+        private NumericUpDown NumUpDown_SplitSize;
+        private Button Btn_BrowseInputScr;
+        private Label Lbl_InputScrFilePath;
+        private CheckBox Check_UseScrFile;
+        private OpenFileDialog InputScrFileDialog;
+        private Label label13;
+        private Label label12;
+        private Label label11;
+        private Label label10;
+        private Label label9;
+        private Label label14;
+        private Label Lbl_CreateFilelistInputDir;
+        private Button Btn_BrowseInputDirectory;
+        private Button Btn_CreateFileList;
+        private FolderBrowserDialog CreateFilelistInputDirDialog;
+        private FolderBrowserDialog CreateFilelistOutputDirDialog;
     }
 }
