@@ -269,8 +269,17 @@ namespace FilelistUtilGUI
 
             try
             {
-                //TODO Add a process form
-                _currentFileListBin.ExportFiles(path);
+                void proc()
+                {
+                    _currentFileListBin.ExportFiles(path);
+                }
+
+                ProcessBar procBar = new(proc, "Extracting files")
+                {
+                    StartPosition = FormStartPosition.CenterParent
+                };
+                procBar.ShowDialog(this);
+                procBar.Dispose();
             }
             catch (Exception ex)
             {
