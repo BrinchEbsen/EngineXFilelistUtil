@@ -28,6 +28,7 @@ namespace FilelistUtilGUI
             NumUpDown_Version.Value = NumUpDown_Version.Maximum;
 
             NumUpDown_SplitSize.Value = Filelist.FILE_SIZE_SPLIT_MINIMUM;
+            NumUpDown_SplitSize.Minimum = Filelist.FILE_SIZE_SPLIT_MINIMUM;
         }
 
         private void Check_UseSplitSize_CheckedChanged(object sender, EventArgs e)

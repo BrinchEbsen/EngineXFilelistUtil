@@ -569,6 +569,7 @@ namespace FilelistUtilGUI
             // TextBox_FilelistName
             // 
             TextBox_FilelistName.Location = new Point(98, 75);
+            TextBox_FilelistName.MaxLength = 256;
             TextBox_FilelistName.Name = "TextBox_FilelistName";
             TextBox_FilelistName.Size = new Size(120, 23);
             TextBox_FilelistName.TabIndex = 3;
