@@ -1,4 +1,5 @@
-﻿using FilelistUtilities.Filelist;
+﻿using FilelistUtilities.Common;
+using FilelistUtilities.Filelist;
 
 namespace FilelistUtilGUI
 {
@@ -286,6 +287,69 @@ namespace FilelistUtilGUI
                         "Error extracting files.",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
+            }
+        }
+
+        private void Btn_TransferToCreateTab_Click(object sender, EventArgs e)
+        {
+            if (_currentFileListBin is null || _selectedBinFilePath is null) return;
+
+            //Local method to check if any file path in the filelist contains a string
+            static bool FilelistPathsContains(Filelist filelist, string match)
+            {
+                foreach(var elem in filelist.FileInfo)
+                    if (elem.Path.Contains(match)) return true;
+
+                return false;
+            }
+
+            //Test which platform the filelist is for using the file paths
+            GamePlatform platform;
+
+            if (FilelistPathsContains(_currentFileListBin, "_bin_ps2"))
+                platform = GamePlatform.PlayStation2;
+            else if (FilelistPathsContains(_currentFileListBin, "_bin_xb"))
+                platform = GamePlatform.Xbox;
+            else
+                platform = GamePlatform.GameCube;
+
+            //Pick the index to set the combobox to
+            int i = 0;
+            foreach (var pair in PlatformDict)
+            {
+                if (pair.Value == platform)
+                    break;
+
+                i++;
+            }
+
+            ComboBox_Platform.SelectedIndex = i;
+
+            //Version
+            NumUpDown_Version.Value = _currentFileListBin.Version;
+
+            //Filelist name
+            TextBox_FilelistName.Text = Path.GetFileNameWithoutExtension(_selectedBinFilePath);
+
+            //Drive letter
+            if (_currentFileListBin.DetectedRootName != char.MinValue)
+                TextBox_DriveLetter.Text = _currentFileListBin.DetectedRootName.ToString();
+
+            //Split size (if Xbox and version which uses multiple archives)
+            bool split = platform == GamePlatform.Xbox && _currentFileListBin.Version >= 5;
+
+            Check_UseSplitSize.Checked = split;
+            Check_UseXboxDefaultSplitSize.Checked = split;
+
+            //Scr
+            if (_outputScrFilePath is not null && Check_OutputScr.Checked)
+            {
+                Check_UseScrFile.Checked = true;
+                _inputScrPath = _outputScrFilePath;
+                Lbl_InputScrFilePath.Text = _outputScrFilePath;
+            } else
+            {
+                Check_UseScrFile.Checked = false;
             }
         }
     }

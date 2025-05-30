@@ -46,6 +46,7 @@ namespace FilelistUtilGUI
             columnHeader7 = new ColumnHeader();
             columnHeader8 = new ColumnHeader();
             GroupBox_FilelistStats = new GroupBox();
+            Btn_TransferToCreateTab = new Button();
             FlowPanel_Archives = new FlowLayoutPanel();
             label7 = new Label();
             Lbl_NumberOfArchives = new Label();
@@ -189,7 +190,7 @@ namespace FilelistUtilGUI
             ListView_FilelistBinList.Location = new Point(6, 50);
             ListView_FilelistBinList.MultiSelect = false;
             ListView_FilelistBinList.Name = "ListView_FilelistBinList";
-            ListView_FilelistBinList.Size = new Size(867, 532);
+            ListView_FilelistBinList.Size = new Size(867, 509);
             ListView_FilelistBinList.TabIndex = 6;
             ListView_FilelistBinList.UseCompatibleStateImageBehavior = false;
             ListView_FilelistBinList.View = View.Details;
@@ -236,6 +237,7 @@ namespace FilelistUtilGUI
             // GroupBox_FilelistStats
             // 
             GroupBox_FilelistStats.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GroupBox_FilelistStats.Controls.Add(Btn_TransferToCreateTab);
             GroupBox_FilelistStats.Controls.Add(FlowPanel_Archives);
             GroupBox_FilelistStats.Controls.Add(label7);
             GroupBox_FilelistStats.Controls.Add(Lbl_NumberOfArchives);
@@ -248,12 +250,22 @@ namespace FilelistUtilGUI
             GroupBox_FilelistStats.Controls.Add(label4);
             GroupBox_FilelistStats.Controls.Add(label3);
             GroupBox_FilelistStats.Controls.Add(label2);
-            GroupBox_FilelistStats.Location = new Point(6, 588);
+            GroupBox_FilelistStats.Location = new Point(6, 565);
             GroupBox_FilelistStats.Name = "GroupBox_FilelistStats";
-            GroupBox_FilelistStats.Size = new Size(867, 102);
+            GroupBox_FilelistStats.Size = new Size(867, 125);
             GroupBox_FilelistStats.TabIndex = 5;
             GroupBox_FilelistStats.TabStop = false;
             GroupBox_FilelistStats.Text = "Filelist Stats";
+            // 
+            // Btn_TransferToCreateTab
+            // 
+            Btn_TransferToCreateTab.Location = new Point(6, 97);
+            Btn_TransferToCreateTab.Name = "Btn_TransferToCreateTab";
+            Btn_TransferToCreateTab.Size = new Size(166, 23);
+            Btn_TransferToCreateTab.TabIndex = 12;
+            Btn_TransferToCreateTab.Text = "Transfer to create tab";
+            Btn_TransferToCreateTab.UseVisualStyleBackColor = true;
+            Btn_TransferToCreateTab.Click += Btn_TransferToCreateTab_Click;
             // 
             // FlowPanel_Archives
             // 
@@ -261,15 +273,15 @@ namespace FilelistUtilGUI
             FlowPanel_Archives.AutoScroll = true;
             FlowPanel_Archives.BorderStyle = BorderStyle.FixedSingle;
             FlowPanel_Archives.FlowDirection = FlowDirection.TopDown;
-            FlowPanel_Archives.Location = new Point(305, 19);
+            FlowPanel_Archives.Location = new Point(318, 19);
             FlowPanel_Archives.Name = "FlowPanel_Archives";
-            FlowPanel_Archives.Size = new Size(556, 77);
+            FlowPanel_Archives.Size = new Size(543, 100);
             FlowPanel_Archives.TabIndex = 11;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(244, 19);
+            label7.Location = new Point(257, 64);
             label7.Name = "label7";
             label7.Size = new Size(55, 15);
             label7.TabIndex = 10;
@@ -713,5 +725,6 @@ namespace FilelistUtilGUI
         private Button Btn_CreateFileList;
         private FolderBrowserDialog CreateFilelistInputDirDialog;
         private FolderBrowserDialog CreateFilelistOutputDirDialog;
+        private Button Btn_TransferToCreateTab;
     }
 }
