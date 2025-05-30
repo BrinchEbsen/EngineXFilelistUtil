@@ -12,6 +12,9 @@ namespace FilelistUtilGUI
         {
             GroupBox_FilelistStats.Visible = false;
             GroupBox_ExtractFiles.Visible = false;
+
+            _columnSorter = new BinInfoListColumnSorter();
+            ListView_FilelistBinList.ListViewItemSorter = _columnSorter;
         }
 
         private void Btn_BrowseReadBinFile_Click(object sender, EventArgs e)

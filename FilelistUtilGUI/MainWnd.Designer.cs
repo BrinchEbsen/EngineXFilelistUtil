@@ -183,6 +183,7 @@ namespace FilelistUtilGUI
             // 
             // ListView_FilelistBinList
             // 
+            ListView_FilelistBinList.AllowColumnReorder = true;
             ListView_FilelistBinList.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ListView_FilelistBinList.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5, columnHeader6, columnHeader7, columnHeader8 });
             ListView_FilelistBinList.Location = new Point(6, 50);
@@ -192,6 +193,7 @@ namespace FilelistUtilGUI
             ListView_FilelistBinList.TabIndex = 6;
             ListView_FilelistBinList.UseCompatibleStateImageBehavior = false;
             ListView_FilelistBinList.View = View.Details;
+            ListView_FilelistBinList.ColumnClick += ListView_FilelistBinList_ColumnClick;
             // 
             // columnHeader1
             // 

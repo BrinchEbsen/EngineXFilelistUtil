@@ -2,6 +2,8 @@ namespace FilelistUtilGUI
 {
     public partial class MainWnd : Form
     {
+        private BinInfoListColumnSorter _columnSorter;
+
         public MainWnd()
         {
             InitializeComponent();

@@ -216,5 +216,33 @@ namespace FilelistUtilGUI
 
             return true;
         }
+
+        // Code derived from:
+        // https://learn.microsoft.com/da-dk/troubleshoot/developer/visualstudio/csharp/language-compilers/sort-listview-by-column
+        private void ListView_FilelistBinList_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == _columnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                if (_columnSorter.Order == SortOrder.Ascending)
+                {
+                    _columnSorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    _columnSorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                _columnSorter.SortColumn = e.Column;
+                _columnSorter.Order = SortOrder.Ascending;
+            }
+
+            // Perform the sort with these new sort options.
+            this.ListView_FilelistBinList.Sort();
+        }
     }
 }
