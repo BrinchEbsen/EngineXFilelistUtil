@@ -29,6 +29,7 @@ namespace FilelistUtilGUI
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             tabControl1 = new TabControl();
             TabPage_Extract = new TabPage();
             GroupBox_ExtractFiles = new GroupBox();
@@ -89,6 +90,7 @@ namespace FilelistUtilGUI
             InputScrFileDialog = new OpenFileDialog();
             CreateFilelistInputDirDialog = new FolderBrowserDialog();
             CreateFilelistOutputDirDialog = new FolderBrowserDialog();
+            MainToolTiP = new ToolTip(components);
             tabControl1.SuspendLayout();
             TabPage_Extract.SuspendLayout();
             GroupBox_ExtractFiles.SuspendLayout();
@@ -147,6 +149,7 @@ namespace FilelistUtilGUI
             Btn_ExtractFiles.Size = new Size(120, 23);
             Btn_ExtractFiles.TabIndex = 7;
             Btn_ExtractFiles.Text = "Extract Files...";
+            MainToolTiP.SetToolTip(Btn_ExtractFiles, "Extract the files to a specified folder.");
             Btn_ExtractFiles.UseVisualStyleBackColor = true;
             Btn_ExtractFiles.Click += Btn_ExtractFiles_Click;
             // 
@@ -158,6 +161,7 @@ namespace FilelistUtilGUI
             Btn_BrowseOutputScr.Size = new Size(75, 23);
             Btn_BrowseOutputScr.TabIndex = 10;
             Btn_BrowseOutputScr.Text = "Browse";
+            MainToolTiP.SetToolTip(Btn_BrowseOutputScr, "Select the destination for the outputted .scr file.");
             Btn_BrowseOutputScr.UseVisualStyleBackColor = true;
             Btn_BrowseOutputScr.Click += Btn_BrowseOutputScr_Click;
             // 
@@ -179,6 +183,7 @@ namespace FilelistUtilGUI
             Check_OutputScr.Size = new Size(104, 19);
             Check_OutputScr.TabIndex = 8;
             Check_OutputScr.Text = "Output .scr file";
+            MainToolTiP.SetToolTip(Check_OutputScr, "Output a .scr file to document the included files and their order.\r\n");
             Check_OutputScr.UseVisualStyleBackColor = true;
             Check_OutputScr.CheckedChanged += Check_OutputScr_CheckedChanged;
             // 
@@ -264,6 +269,7 @@ namespace FilelistUtilGUI
             Btn_TransferToCreateTab.Size = new Size(166, 23);
             Btn_TransferToCreateTab.TabIndex = 12;
             Btn_TransferToCreateTab.Text = "Transfer to create tab";
+            MainToolTiP.SetToolTip(Btn_TransferToCreateTab, "Transfer the information from this filelist to the \"Create\" tab.\r\n");
             Btn_TransferToCreateTab.UseVisualStyleBackColor = true;
             Btn_TransferToCreateTab.Click += Btn_TransferToCreateTab_Click;
             // 
@@ -277,6 +283,7 @@ namespace FilelistUtilGUI
             FlowPanel_Archives.Name = "FlowPanel_Archives";
             FlowPanel_Archives.Size = new Size(543, 100);
             FlowPanel_Archives.TabIndex = 11;
+            MainToolTiP.SetToolTip(FlowPanel_Archives, "The archives referenced by this filelist, containing the actual binary data of the files.");
             // 
             // label7
             // 
@@ -295,6 +302,7 @@ namespace FilelistUtilGUI
             Lbl_NumberOfArchives.Size = new Size(29, 15);
             Lbl_NumberOfArchives.TabIndex = 9;
             Lbl_NumberOfArchives.Text = "N/A";
+            MainToolTiP.SetToolTip(Lbl_NumberOfArchives, "Number of archives used by this filelist. Only version 5 or above uses more than 1.");
             // 
             // Lbl_BuildType
             // 
@@ -304,6 +312,7 @@ namespace FilelistUtilGUI
             Lbl_BuildType.Size = new Size(29, 15);
             Lbl_BuildType.TabIndex = 8;
             Lbl_BuildType.Text = "N/A";
+            MainToolTiP.SetToolTip(Lbl_BuildType, "Only version 5 and above: Type of this filelist. 0 for loosely stored files, 1 for files stored in archives.");
             // 
             // Lbl_NumberOfFiles
             // 
@@ -313,6 +322,7 @@ namespace FilelistUtilGUI
             Lbl_NumberOfFiles.Size = new Size(29, 15);
             Lbl_NumberOfFiles.TabIndex = 7;
             Lbl_NumberOfFiles.Text = "N/A";
+            MainToolTiP.SetToolTip(Lbl_NumberOfFiles, "Amount of files in the file system.");
             // 
             // Lbl_BinSize
             // 
@@ -322,6 +332,7 @@ namespace FilelistUtilGUI
             Lbl_BinSize.Size = new Size(29, 15);
             Lbl_BinSize.TabIndex = 6;
             Lbl_BinSize.Text = "N/A";
+            MainToolTiP.SetToolTip(Lbl_BinSize, "The size of the .bin filelist file in bytes.");
             // 
             // Lbl_FilelistVersion
             // 
@@ -331,6 +342,7 @@ namespace FilelistUtilGUI
             Lbl_FilelistVersion.Size = new Size(29, 15);
             Lbl_FilelistVersion.TabIndex = 5;
             Lbl_FilelistVersion.Text = "N/A";
+            MainToolTiP.SetToolTip(Lbl_FilelistVersion, "The version of the filelist.");
             // 
             // label6
             // 
@@ -393,6 +405,7 @@ namespace FilelistUtilGUI
             Btn_BrowseReadBinFile.Size = new Size(75, 23);
             Btn_BrowseReadBinFile.TabIndex = 2;
             Btn_BrowseReadBinFile.Text = "Browse";
+            MainToolTiP.SetToolTip(Btn_BrowseReadBinFile, "Open a .bin filelist file.");
             Btn_BrowseReadBinFile.UseVisualStyleBackColor = true;
             Btn_BrowseReadBinFile.Click += Btn_BrowseReadBinFile_Click;
             // 
@@ -442,6 +455,7 @@ namespace FilelistUtilGUI
             Btn_CreateFileList.Size = new Size(107, 34);
             Btn_CreateFileList.TabIndex = 22;
             Btn_CreateFileList.Text = "Create Filelist...";
+            MainToolTiP.SetToolTip(Btn_CreateFileList, "Output the new filelist to a specified folder.");
             Btn_CreateFileList.UseVisualStyleBackColor = true;
             Btn_CreateFileList.Click += Btn_CreateFileList_Click;
             // 
@@ -461,6 +475,7 @@ namespace FilelistUtilGUI
             Btn_BrowseInputDirectory.Size = new Size(75, 23);
             Btn_BrowseInputDirectory.TabIndex = 20;
             Btn_BrowseInputDirectory.Text = "Browse";
+            MainToolTiP.SetToolTip(Btn_BrowseInputDirectory, "Specify the input directory containing the files to include in the filelist.");
             Btn_BrowseInputDirectory.UseVisualStyleBackColor = true;
             Btn_BrowseInputDirectory.Click += Btn_BrowseInputDirectory_Click;
             // 
@@ -526,6 +541,7 @@ namespace FilelistUtilGUI
             Btn_BrowseInputScr.Size = new Size(75, 23);
             Btn_BrowseInputScr.TabIndex = 13;
             Btn_BrowseInputScr.Text = "Browse";
+            MainToolTiP.SetToolTip(Btn_BrowseInputScr, "Specify the .scr file to use.");
             Btn_BrowseInputScr.UseVisualStyleBackColor = true;
             Btn_BrowseInputScr.Click += Btn_BrowseInputScr_Click;
             // 
@@ -547,6 +563,7 @@ namespace FilelistUtilGUI
             Check_UseScrFile.Size = new Size(85, 19);
             Check_UseScrFile.TabIndex = 11;
             Check_UseScrFile.Text = "Use .scr file";
+            MainToolTiP.SetToolTip(Check_UseScrFile, "Use a .scr file to specify which files to include and in what order.");
             Check_UseScrFile.UseVisualStyleBackColor = true;
             Check_UseScrFile.CheckedChanged += Check_UseScrFile_CheckedChanged;
             // 
@@ -558,6 +575,7 @@ namespace FilelistUtilGUI
             NumUpDown_SplitSize.Name = "NumUpDown_SplitSize";
             NumUpDown_SplitSize.Size = new Size(120, 23);
             NumUpDown_SplitSize.TabIndex = 7;
+            MainToolTiP.SetToolTip(NumUpDown_SplitSize, "The maximum size of an archive in bytes before it's split into another archive.");
             // 
             // Check_UseXboxDefaultSplitSize
             // 
@@ -568,6 +586,7 @@ namespace FilelistUtilGUI
             Check_UseXboxDefaultSplitSize.Size = new Size(115, 19);
             Check_UseXboxDefaultSplitSize.TabIndex = 6;
             Check_UseXboxDefaultSplitSize.Text = "Use Xbox Default";
+            MainToolTiP.SetToolTip(Check_UseXboxDefaultSplitSize, "Use the usual split size limit for Eurocom's Xbox ports.");
             Check_UseXboxDefaultSplitSize.UseVisualStyleBackColor = true;
             Check_UseXboxDefaultSplitSize.CheckedChanged += Check_UseSplitSize_CheckedChanged;
             // 
@@ -579,6 +598,7 @@ namespace FilelistUtilGUI
             TextBox_DriveLetter.Size = new Size(120, 23);
             TextBox_DriveLetter.TabIndex = 5;
             TextBox_DriveLetter.Text = "x";
+            MainToolTiP.SetToolTip(TextBox_DriveLetter, "The root drive letter for the virtual file system.");
             // 
             // TextBox_FilelistName
             // 
@@ -588,6 +608,7 @@ namespace FilelistUtilGUI
             TextBox_FilelistName.Size = new Size(120, 23);
             TextBox_FilelistName.TabIndex = 3;
             TextBox_FilelistName.Text = "Filelist";
+            MainToolTiP.SetToolTip(TextBox_FilelistName, "The name of the filelist (with no extension).");
             // 
             // NumUpDown_Version
             // 
@@ -595,6 +616,7 @@ namespace FilelistUtilGUI
             NumUpDown_Version.Name = "NumUpDown_Version";
             NumUpDown_Version.Size = new Size(120, 23);
             NumUpDown_Version.TabIndex = 2;
+            MainToolTiP.SetToolTip(NumUpDown_Version, "The version of the filelist.");
             // 
             // label8
             // 
@@ -613,6 +635,7 @@ namespace FilelistUtilGUI
             ComboBox_Platform.Name = "ComboBox_Platform";
             ComboBox_Platform.Size = new Size(121, 23);
             ComboBox_Platform.TabIndex = 0;
+            MainToolTiP.SetToolTip(ComboBox_Platform, "The platform to output the filelist for.");
             // 
             // Check_UseSplitSize
             // 
@@ -622,6 +645,7 @@ namespace FilelistUtilGUI
             Check_UseSplitSize.Size = new Size(124, 19);
             Check_UseSplitSize.TabIndex = 4;
             Check_UseSplitSize.Text = "Use Split Size Limit";
+            MainToolTiP.SetToolTip(Check_UseSplitSize, "Split the archive into multiple files when they exceed a specified size in bytes.");
             Check_UseSplitSize.UseVisualStyleBackColor = true;
             Check_UseSplitSize.CheckedChanged += Check_UseSplitSize_CheckedChanged;
             // 
@@ -726,5 +750,6 @@ namespace FilelistUtilGUI
         private FolderBrowserDialog CreateFilelistInputDirDialog;
         private FolderBrowserDialog CreateFilelistOutputDirDialog;
         private Button Btn_TransferToCreateTab;
+        private ToolTip MainToolTiP;
     }
 }
