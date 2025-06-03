@@ -76,4 +76,16 @@ flutil create path/to/input/dir path/to/created/Filelist --platform xbox --drive
 
 ### GUI Interface (flutil_gui.exe)
 
-TODO
+The GUI interface is split into two tabs, "Read/Extract" and "Create".
+
+#### Read/Extract
+
+Click the "Browse" at the top to browse for the .bin filelist file and load its information into the tool. A list is populated with information about each file, and some stats about the filelist is put into the "Filelist Stats" panel below.
+
+In the "Extract" section, the contents of the filelist can be extracted with the "Extract Files..." button. To output a .scr file along with it, first tick the "Output .scr file" checkbox and browse for a destination with the button below.
+
+If you want to quickly copy over the stats of the filelist you read into the "Create" tab to quickly re-export a similar filelist, click the "Transfer to create tab" button.
+
+#### Create
+
+This tab is used to make new filelists. The platform, version, name, drive letter, split size and the input .scr file can be chosen, and the directory with the input files can be chosen with the button next to "Input directory". The filelist can then be exported with the "Create Filelist" button.
