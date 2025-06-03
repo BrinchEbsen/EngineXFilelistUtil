@@ -283,7 +283,6 @@ namespace FilelistUtilGUI
             FlowPanel_Archives.Name = "FlowPanel_Archives";
             FlowPanel_Archives.Size = new Size(543, 100);
             FlowPanel_Archives.TabIndex = 11;
-            MainToolTiP.SetToolTip(FlowPanel_Archives, "The archives referenced by this filelist, containing the actual binary data of the files.");
             // 
             // label7
             // 
@@ -293,6 +292,7 @@ namespace FilelistUtilGUI
             label7.Size = new Size(55, 15);
             label7.TabIndex = 10;
             label7.Text = "Archives:";
+            MainToolTiP.SetToolTip(label7, "The archives referenced by this filelist, containing the actual binary data of the files.");
             // 
             // Lbl_NumberOfArchives
             // 
