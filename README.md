@@ -2,6 +2,8 @@
 
 A C# library, command-line tool and GUI tool for reading, inspecting, extracting from and creating EngineX filelists for Eurocom games. Filelists of version 4, 5, 6 and 7 are supported.
 
+All projects were written in .NET 9.0. The GUI tool is made with Windows Forms. The CLI tool was made using the [System.CommandLine](https://github.com/dotnet/command-line-api) library.
+
 ## Usage
 
 ### Command-line Interface (flutil.exe)
